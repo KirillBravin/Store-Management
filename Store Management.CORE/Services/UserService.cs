@@ -113,58 +113,82 @@ namespace Store_Management.CORE.Services
         {
             try
             {
+                bool result = false;
+
                 if (user is Customer customer)
                 {
-                    var result = await _customerDBRepository.ModifyCustomer(id, customer);
+                    result = await _customerDBRepository.ModifyCustomer(id, customer);
 
                     if (result)
                     {
-                        _logger.LogInformation("Customer {CustomerId} successfully modified.", customer.Id);
-                        await _mongoDBCache.ModifyCustomer(customer);
+                        _logger.LogInformation("Customer with ID {CustomerId} successfully modified in the repository.", customer.Id);
+                        try
+                        {
+                            await _mongoDBCache.ModifyCustomer(id, customer);
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.LogError(ex, "An error occurred while updating the cache for customer with ID {CustomerId}.", customer.Id);
+                        }
                     }
                     else
                     {
-                        _logger.LogWarning("Failed to modify customer with id: {CustomerId}", customer.Id);
+                        _logger.LogWarning("Failed to modify customer with ID {CustomerId} in the repository.", customer.Id);
                     }
-
-                    return result;
                 }
                 else if (user is Employee employee)
                 {
-                    var result = await _employeeDBRepository.ModifyEmployee(id, employee);
+                    result = await _employeeDBRepository.ModifyEmployee(id, employee);
 
                     if (result)
                     {
-                        _logger.LogInformation("Employee {EmployeeId} successfully modified.", employee.Id);
+                        _logger.LogInformation("Employee with ID {EmployeeId} successfully modified in the repository.", employee.Id);
+                        try
+                        {
+                            await _mongoDBCache.ModifyEmployee(id, employee);
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.LogError(ex, "An error occurred while updating the cache for employee with ID {EmployeeId}.", employee.Id);
+                        }
                     }
                     else
                     {
-                        _logger.LogWarning("Failed to modify employee with id: {EmployeeId}", employee.Id);
+                        _logger.LogWarning("Failed to modify employee with ID {EmployeeId} in the repository.", employee.Id);
                     }
-
-                    return result;
                 }
                 else
                 {
                     _logger.LogWarning("Unsupported user type: {UserType}", user.GetType().Name);
                 }
+
+                return result;
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An error has occurred while modifying a user.");
+                _logger.LogError(ex, "An error occurred while modifying the user with ID {UserId}.", id);
+                return false;
             }
-            return false;
         }
 
         public async Task<bool> DeleteCustomer(int id)
         {
             try
             {
-                var result = await _customerDBRepository.DeleteCustomer(id);
+                bool result = false;
+                result = await _customerDBRepository.DeleteCustomer(id);
 
                 if (result)
                 {
                     _logger.LogInformation("Customer with id: {Id} successfully deleted.", id);
+                    try
+                    {
+                        await _mongoDBCache.DeleteCustomer(id);
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError(ex, "An error occurred while deleting the cache for customer with ID {Id}.", id);
+                    }
                 }
                 else
                 {
@@ -184,11 +208,20 @@ namespace Store_Management.CORE.Services
         {
             try
             {
-                var result = await _employeeDBRepository.DeleteEmployee(id);
+                bool result = false;
+                result = await _employeeDBRepository.DeleteEmployee(id);
 
                 if (result)
                 {
                     _logger.LogInformation("Employee with id: {Id} successfully deleted.", id);
+                    try
+                    {
+                        await _mongoDBCache.DeleteEmployee(id);
+                    }
+                    catch(Exception ex)
+                    {
+                        _logger.LogError(ex, "An error occurred while deleting the cache for employee with ID {Id}.", id);
+                    }
                 }
                 else
                 {

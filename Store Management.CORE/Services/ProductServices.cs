@@ -13,6 +13,5 @@ namespace Store_Management.CORE.Services
     public class ProductServices
     {
         private readonly IProductDBRepository _dbRepository;
-        private
     }
 }
