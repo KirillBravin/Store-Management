@@ -4,9 +4,9 @@ namespace Store_Management.CORE.Contracts
 {
     public interface ICustomerDBRepository
     {
-        Task AddCustomer(Customer customer);
+        Task<int> AddCustomer(Customer customer);
         Task<List<Customer>> GetAllCustomers();
         Task<bool> ModifyCustomer(int id, Customer customer);
-        Task DeleteCustomer(int id);
+        Task<bool> DeleteCustomer(int id);
     }
 }

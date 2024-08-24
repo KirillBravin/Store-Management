@@ -12,7 +12,7 @@ namespace Store_Management.CORE.Repositories.SQL
 {
     public class EmployeeDBRepository : IEmployeeDBRepository
     {
-        public async Task AddEmployee(Employee employee)
+        public async Task<int> AddEmployee(Employee employee)
         {
             using (var context = new DBContext())
             {
@@ -22,12 +22,13 @@ namespace Store_Management.CORE.Repositories.SQL
                 if (employeeExists)
                 {
                     Console.WriteLine("Employee with this first name and last name already exists.");
-                    return;
+                    return -1;
                 }
 
                 await context.Employees.AddAsync(employee);
                 await context.SaveChangesAsync();
                 Console.WriteLine("Employee added successfully.");
+                return employee.Id;
             }
         }
 
@@ -63,7 +64,7 @@ namespace Store_Management.CORE.Repositories.SQL
             }
         }
 
-        public async Task DeleteEmployee(int id)
+        public async Task<bool> DeleteEmployee(int id)
         {
             using (var context = new DBContext())
             {
@@ -72,13 +73,14 @@ namespace Store_Management.CORE.Repositories.SQL
                 if (existingEmployee == null)
                 {
                     Console.WriteLine($"Employee with id: {id} not found.");
-                    return;
+                    return false;
                 }
 
                 context.Employees.Remove(existingEmployee);
 
                 await context.SaveChangesAsync();
                 Console.WriteLine("Employee successfully deleted.");
+                return true;
             }
         }
     }

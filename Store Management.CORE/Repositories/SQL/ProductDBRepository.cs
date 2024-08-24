@@ -11,7 +11,7 @@ namespace Store_Management.CORE.Repositories.SQL
 {
     public class ProductDBRepository : IProductDBRepository
     {
-        public async Task AddProduct(Product product)
+        public async Task<int> AddProduct(Product product)
         {
             using (var context = new DBContext())
             {
@@ -20,12 +20,13 @@ namespace Store_Management.CORE.Repositories.SQL
                 if (productExists)
                 {
                     Console.WriteLine("Product with this name and category already exists.");
-                    return;
+                    return -1;
                 }
 
                 await context.Products.AddAsync(product);
                 await context.SaveChangesAsync();
                 Console.WriteLine("Product added successfully.");
+                return product.Id;
             }
         }
 

@@ -3,9 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Store Management.API", "Store Management\Store Management.API.csproj", "{7642FDB9-D33F-40A2-A9AF-5D82AF666CE3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Store Management.API", "Store Management\Store Management.API.csproj", "{7642FDB9-D33F-40A2-A9AF-5D82AF666CE3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C2181A49-589A-4123-911E-F13EA179544B} = {C2181A49-589A-4123-911E-F13EA179544B}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Store Management.Core", "Store Management.CORE\Store Management.Core.csproj", "{C2181A49-589A-4123-911E-F13EA179544B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Store Management.Core", "Store Management.CORE\Store Management.Core.csproj", "{C2181A49-589A-4123-911E-F13EA179544B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

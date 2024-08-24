@@ -11,7 +11,7 @@ namespace Store_Management.CORE.Repositories.SQL
 {
     public class CustomerDBRepository : ICustomerDBRepository
     {
-        public async Task AddCustomer(Customer customer)
+        public async Task<int> AddCustomer(Customer customer)
         {
             using (var context = new DBContext())
             {
@@ -21,12 +21,13 @@ namespace Store_Management.CORE.Repositories.SQL
                 if (customerExists)
                 {
                     Console.WriteLine("Customer with this first name and last name already exists.");
-                    return;
+                    return -1;
                 }
 
                 await context.Customers.AddAsync(customer);
                 await context.SaveChangesAsync();
                 Console.WriteLine("Customer added successfully.");
+                return customer.Id;
             }
         }
 
@@ -62,7 +63,7 @@ namespace Store_Management.CORE.Repositories.SQL
             }
         }
 
-        public async Task DeleteCustomer(int id)
+        public async Task<bool> DeleteCustomer(int id)
         {
             using (var context = new DBContext())
             {
@@ -71,13 +72,14 @@ namespace Store_Management.CORE.Repositories.SQL
                 if (existingCustomer == null)
                 {
                     Console.WriteLine($"Customer with id: {id} not found.");
-                    return;
+                    return false;
                 }
 
                 context.Customers.Remove(existingCustomer);
 
                 await context.SaveChangesAsync();
                 Console.WriteLine("Customer successfully deleted.");
+                return true;
             }
         }
     }

@@ -4,7 +4,7 @@ namespace Store_Management.CORE.Contracts
 {
     public interface IProductDBRepository
     {
-        Task AddProduct(Product product);
+        Task<int> AddProduct(Product product);
         Task<List<Product>> GetAllProducts();
         Task<bool> ModifyProduct(int id, Product product);
         Task DeleteProduct(int id);

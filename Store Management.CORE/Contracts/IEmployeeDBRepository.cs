@@ -4,9 +4,9 @@ namespace Store_Management.CORE.Contracts
 {
     public interface IEmployeeDBRepository
     {
-        Task AddEmployee(Employee employee);
+        Task<int> AddEmployee(Employee employee);
         Task<List<Employee>> GetAllEmployees();
         Task<bool> ModifyEmployee(int id, Employee employee);
-        Task DeleteEmployee(int id);
+        Task<bool> DeleteEmployee(int id);
     }
 }
