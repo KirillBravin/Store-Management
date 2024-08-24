@@ -120,6 +120,7 @@ namespace Store_Management.CORE.Services
                     if (result)
                     {
                         _logger.LogInformation("Customer {CustomerId} successfully modified.", customer.Id);
+                        await _mongoDBCache.ModifyCustomer(customer);
                     }
                     else
                     {

@@ -38,26 +38,27 @@ namespace Store_Management.CORE.Repositories.MongoDb
             return await _customerCache.Find(_ => true).ToListAsync();
         }
 
-        public async Task ModifyCustomer(Customer customer)
+        public async Task<bool> ModifyCustomer(int id, Customer customer)
         {
-            var filter = Builders<Customer>.Filter.Eq(x => x.Id, customer.Id);
-            var result = await _customerCache.ReplaceOneAsync(filter, customer);
+            var filter = Builders<Customer>.Filter.Eq(x => x.Id, id);
 
-            if (result.MatchedCount == 0)
-            {
-                throw new Exception($"Customer not found with id: {customer.Id}");
-            }
+            var update = Builders<Customer>.Update
+                .Set(x => x.FirstName, customer.FirstName)
+                .Set(x => x.LastName, customer.LastName)
+                .Set(x => x.Email, customer.Email)
+                .Set(x => x.PhoneNumber, customer.PhoneNumber);
+
+            var result = await _customerCache.UpdateOneAsync(filter, update);
+
+            return result.MatchedCount > 0 && result.ModifiedCount > 0;
         }
 
-        public async Task DeleteCustomer(int id)
+        public async Task<bool> DeleteCustomer(int id)
         {
             var filter = Builders<Customer>.Filter.Eq(x => x.Id, id);
             var result = await _customerCache.DeleteOneAsync(filter);
 
-            if (result.DeletedCount == 0)
-            {
-                throw new Exception($"Customer not found with id: {id}");
-            }
+            return result.DeletedCount > 0;
         }
 
         // Employee
@@ -72,26 +73,27 @@ namespace Store_Management.CORE.Repositories.MongoDb
             return await _employeeCache.Find(_ => true).ToListAsync();
         }
 
-        public async Task ModifyEmployee(Employee employee)
+        public async Task<bool> ModifyEmployee(int id, Employee employee)
         {
-            var filter = Builders<Employee>.Filter.Eq(x => x.Id, employee.Id);
-            var result = await _employeeCache.ReplaceOneAsync(filter, employee);
+            var filter = Builders<Employee>.Filter.Eq(x => x.Id, id);
 
-            if (result.MatchedCount == 0)
-            {
-                throw new Exception($"Employee not found with id: {employee.Id}");
-            }
+            var update = Builders<Employee>.Update
+                .Set(x => x.FirstName, employee.FirstName)
+                .Set(x => x.LastName, employee.LastName)
+                .Set(x => x.Email, employee.Email)
+                .Set(x => x.PhoneNumber, employee.PhoneNumber);
+
+            var result = await _employeeCache.UpdateOneAsync(filter, update);
+
+            return result.MatchedCount > 0 && result.ModifiedCount > 0;
         }
 
-        public async Task DeleteEmployee(int id)
+        public async Task<bool> DeleteEmployee(int id)
         {
             var filter = Builders<Employee>.Filter.Eq(x => x.Id, id);
             var result = await _employeeCache.DeleteOneAsync(filter);
 
-            if (result.DeletedCount == 0)
-            {
-                throw new Exception($"Employee not found with id: {id}");
-            }
+            return result.DeletedCount > 0;
         }
 
         // Product
@@ -106,26 +108,27 @@ namespace Store_Management.CORE.Repositories.MongoDb
             return await _productCache.Find(_ => true).ToListAsync();
         }
 
-        public async Task ModifyProduct(Product product)
+        public async Task<bool> ModifyProduct(int id, Product product)
         {
-            var filter = Builders<Product>.Filter.Eq(x => x.Id, product.Id);
-            var result = await _productCache.ReplaceOneAsync(filter, product);
+            var filter = Builders<Product>.Filter.Eq(x => x.Id, id);
 
-            if (result.MatchedCount == 0)
-            {
-                throw new Exception($"Product not found with id: {product.Id}");
-            }
+            var update = Builders<Product>.Update
+                .Set(x => x.Name, product.Name)
+                .Set(x => x.Price, product.Price)
+                .Set(x => x.Quantity, product.Quantity)
+                .Set(x => x.Category, product.Category);
+
+            var result = await _productCache.UpdateOneAsync(filter, update);
+
+            return result.MatchedCount > 0 && result.ModifiedCount > 0;
         }
 
-        public async Task DeleteProduct(int id)
+        public async Task<bool> DeleteProduct(int id)
         {
             var filter = Builders<Product>.Filter.Eq(x => x.Id, id);
             var result = await _productCache.DeleteOneAsync(filter);
 
-            if (result.DeletedCount == 0)
-            {
-                throw new Exception($"Product not found with id: {id}");
-            }
+            return result.DeletedCount > 0;
         }
 
         // Orders
@@ -140,26 +143,27 @@ namespace Store_Management.CORE.Repositories.MongoDb
             return await _orderCache.Find(_ => true).ToListAsync();
         }
 
-        public async Task ModifyOrder(Order order)
+        public async Task<bool> ModifyOrder(int id, Order order)
         {
-            var filter = Builders<Order>.Filter.Eq(x => x.Id, order.Id);
-            var result = await _orderCache.ReplaceOneAsync(filter, order);
+            var filter = Builders<Order>.Filter.Eq(x => x.Id, id);
 
-            if (result.MatchedCount == 0)
-            {
-                throw new Exception($"Order not found with id: {order.Id}");
-            }
+            var update = Builders<Order>.Update
+                .Set(x => x.UserId, order.UserId)
+                .Set(x => x.ProductId, order.ProductId)
+                .Set(x => x.Quantity, order.Quantity)
+                .Set(x => x.Date, order.Date);
+
+            var result = await _orderCache.UpdateOneAsync(filter, update);
+
+            return result.MatchedCount > 0 && result.ModifiedCount > 0;
         }
 
-        public async Task DeleteOrder(int id)
+        public async Task<bool> DeleteOrder(int id)
         {
             var filter = Builders<Order>.Filter.Eq(x => x.Id, id);
             var result = await _orderCache.DeleteOneAsync(filter);
 
-            if (result.DeletedCount == 0)
-            {
-                throw new Exception($"Order not found with id: {id}");
-            }
+            return result.DeletedCount > 0;
         }
     }
 }
