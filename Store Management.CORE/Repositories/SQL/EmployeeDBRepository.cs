@@ -1,0 +1,85 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Store_Management.CORE.Models;
+using Store_Management.CORE.Contracts;
+
+
+namespace Store_Management.CORE.Repositories.SQL
+{
+    public class EmployeeDBRepository : IEmployeeDBRepository
+    {
+        public async Task AddEmployee(Employee employee)
+        {
+            using (var context = new DBContext())
+            {
+                // Checking if employee with this first name and last name exists
+                bool employeeExists = await context.Employees.AnyAsync(e => e.FirstName == employee.FirstName && e.LastName == employee.LastName);
+
+                if (employeeExists)
+                {
+                    Console.WriteLine("Employee with this first name and last name already exists.");
+                    return;
+                }
+
+                await context.Employees.AddAsync(employee);
+                await context.SaveChangesAsync();
+                Console.WriteLine("Employee added successfully.");
+            }
+        }
+
+        public async Task<List<Employee>> GetAllEmployees()
+        {
+            using (var context = new DBContext())
+            {
+                return await context.Employees.ToListAsync();
+            }
+        }
+
+        public async Task<bool> ModifyEmployee(int id, Employee employee)
+        {
+            using (var context = new DBContext())
+            {
+                var existingEmployee = await context.Employees.FindAsync(id);
+
+                if (existingEmployee == null)
+                {
+                    Console.WriteLine("Employee not found");
+                    return false;
+                }
+
+                existingEmployee.FirstName = employee.FirstName;
+                existingEmployee.LastName = employee.LastName;
+                existingEmployee.Email = employee.Email;
+                existingEmployee.PhoneNumber = employee.PhoneNumber;
+
+                await context.SaveChangesAsync();
+
+                Console.WriteLine("Employee updated successfully.");
+                return true;
+            }
+        }
+
+        public async Task DeleteEmployee(int id)
+        {
+            using (var context = new DBContext())
+            {
+                var existingEmployee = await context.Employees.FindAsync(id);
+
+                if (existingEmployee == null)
+                {
+                    Console.WriteLine($"Employee with id: {id} not found.");
+                    return;
+                }
+
+                context.Employees.Remove(existingEmployee);
+
+                await context.SaveChangesAsync();
+                Console.WriteLine("Employee successfully deleted.");
+            }
+        }
+    }
+}
