@@ -10,6 +10,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Store Management.API", "Sto
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Store Management.Core", "Store Management.CORE\Store Management.Core.csproj", "{C2181A49-589A-4123-911E-F13EA179544B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Store Management.Tests", "Store Management.Tests\Store Management.Tests.csproj", "{7216B0FD-2377-4417-9635-EC7EDDE93B19}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C2181A49-589A-4123-911E-F13EA179544B} = {C2181A49-589A-4123-911E-F13EA179544B}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +29,10 @@ Global
 		{C2181A49-589A-4123-911E-F13EA179544B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2181A49-589A-4123-911E-F13EA179544B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2181A49-589A-4123-911E-F13EA179544B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7216B0FD-2377-4417-9635-EC7EDDE93B19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7216B0FD-2377-4417-9635-EC7EDDE93B19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7216B0FD-2377-4417-9635-EC7EDDE93B19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7216B0FD-2377-4417-9635-EC7EDDE93B19}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

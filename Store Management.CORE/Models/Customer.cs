@@ -11,7 +11,7 @@ namespace Store_Management.CORE.Models
     {
         public int Id { get; set; }
 
-        public Customer(string firstName, string lastName, string email, int phoneNumber) : base(firstName, lastName, email, phoneNumber)
+        public Customer(string firstName, string lastName, string email, string phoneNumber) : base(firstName, lastName, email, phoneNumber)
         {
             FirstName = firstName;
             LastName = lastName;

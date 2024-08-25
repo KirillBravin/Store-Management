@@ -12,7 +12,7 @@ namespace Store_Management.CORE.Models
         [Key]
         public int Id { get; set; }
 
-        public Employee(string firstName, string lastName, string email, int phoneNumber) : base(firstName, lastName, email, phoneNumber)
+        public Employee(string firstName, string lastName, string email, string phoneNumber) : base(firstName, lastName, email, phoneNumber)
         {
             FirstName = firstName;
             LastName = lastName;
