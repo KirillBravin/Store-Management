@@ -187,7 +187,7 @@ namespace Store_Management.CORE.Services
                     }
                     catch (Exception ex)
                     {
-                        _logger.LogError(ex, "An error occurred while deleting the cache for customer with ID {Id}.", id);
+                        _logger.LogError(ex, "An error occurred while deleting the cache for customer with id: {Id}.", id);
                     }
                 }
                 else

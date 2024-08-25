@@ -60,7 +60,7 @@ namespace Store_Management.CORE.Repositories.SQL
             }
         }
 
-        public async Task DeleteProduct(int id)
+        public async Task<bool> DeleteProduct(int id)
         {
             using (var context = new DBContext())
             {
@@ -69,12 +69,14 @@ namespace Store_Management.CORE.Repositories.SQL
                 if (existingProduct == null)
                 {
                     Console.WriteLine($"Product with id: {id} not found.");
+                    return false;
                 }
 
                 context.Products.Remove(existingProduct);
 
                 await context.SaveChangesAsync();
                 Console.WriteLine("Product successfully deleted.");
+                return true;
             }
         }
     }
