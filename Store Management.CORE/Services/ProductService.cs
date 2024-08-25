@@ -8,7 +8,7 @@ using Store_Management.CORE.Models;
 using Serilog;
 using Microsoft.Extensions.Logging;
 
-namespace Store_Management.CORE.Service
+namespace Store_Management.CORE.Services
 {
     public class ProductService : IProductService
     {
@@ -79,7 +79,7 @@ namespace Store_Management.CORE.Service
 
                 if (result)
                 {
-                    _logger.LogInformation("Product with Id: {ProductId} successfully modified in the repository.", product.Id);
+                    _logger.LogInformation("Product with Id: {ProductId} successfully modified.", product.Id);
                     try
                     {
                         await _mongoDBCache.ModifyProduct(id, product);
@@ -97,7 +97,7 @@ namespace Store_Management.CORE.Service
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An error has occurred while modifying the user with ID {ProductId}");
+                _logger.LogError(ex, "An error has occurred while modifying the user with id: {ProductId}.", product.Id);
                 return false;
             }
         }

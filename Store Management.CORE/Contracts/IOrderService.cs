@@ -2,9 +2,9 @@
 
 namespace Store_Management.CORE.Contracts
 {
-    public interface IOrderDBRepository
+    public interface IOrderService
     {
-        Task<bool> AddOrder(Order order);
+        Task<bool> AddOrder(int userId, int productId, int quantity);
         Task<List<Order>> GetAllOrders();
         Task<bool> ModifyOrder(int id, Order order);
         Task<bool> DeleteOrder(int id);

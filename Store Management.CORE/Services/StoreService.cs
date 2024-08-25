@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Store_Management.CORE.Services
 {
-    internal class StoreServices
+    internal class StoreService
     {
     }
 }

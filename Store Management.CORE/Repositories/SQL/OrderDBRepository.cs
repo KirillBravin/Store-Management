@@ -11,16 +11,13 @@ namespace Store_Management.CORE.Repositories.SQL
 {
     public class OrderDBRepository : IOrderDBRepository
     {
-        public async Task AddOrder(int customerId, int productId, int quantity)
+        public async Task<bool> AddOrder(Order order)
         {
             using (var context = new DBContext())
             {
-                DateOnly currentDate = DateOnly.FromDateTime(DateTime.Now);
-                Order newOrder = new Order(customerId, productId, currentDate, quantity);
-
-                await context.Orders.AddAsync(newOrder);
+                await context.Orders.AddAsync(order);
                 await context.SaveChangesAsync();
-                Console.WriteLine("Order successfully created.");
+                return true;
             }
         }
 
@@ -56,7 +53,7 @@ namespace Store_Management.CORE.Repositories.SQL
             }
         }
 
-        public async Task DeleteOrder(int id)
+        public async Task<bool> DeleteOrder(int id)
         {
             using (var context = new DBContext())
             {
@@ -65,12 +62,13 @@ namespace Store_Management.CORE.Repositories.SQL
                 if (existingOrder == null)
                 {
                     Console.WriteLine($"Order with id: {id} not found.");
-                    return;
+                    return false;
                 }
 
                 context.Orders.Remove(existingOrder);
                 await context.SaveChangesAsync();
                 Console.WriteLine("Order successfully deleted.");
+                return true;
             }
         }
     }
