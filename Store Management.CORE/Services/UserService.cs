@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Store_Management.CORE.Contracts;
 using Store_Management.CORE.Models;
-using Serilog;
 using Microsoft.Extensions.Logging;
 
 namespace Store_Management.CORE.Services

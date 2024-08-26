@@ -78,7 +78,7 @@ namespace Store_Management.Tests
 
         // Returns list of employees
         [Fact]
-        public async Task TestGettingAllEmployees_ShouldReturnListOfEmployees()
+        public async Task TestGettingAllEmployees()
         {
             //Arrange
             var employees = new List<Employee>
@@ -100,6 +100,8 @@ namespace Store_Management.Tests
             Assert.NotEmpty(result);
             Assert.Equal(1, result.Count);
         }
+
+        // Return list of customers
 
         // Testing if there are no employees and it should return empty list
         [Fact]
