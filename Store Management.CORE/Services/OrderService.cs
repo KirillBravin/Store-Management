@@ -14,14 +14,20 @@ namespace Store_Management.CORE.Services
     public class OrderService : IOrderService
     {
         private readonly IOrderDBRepository _orderRepository;
+        private readonly ICustomerDBRepository _customerRepository;
+        private readonly IEmployeeDBRepository _employeeRepository;
+        private readonly IProductDBRepository _productRepository;
         private readonly IMongoDBCache _mongoDBCache;
         private readonly ILogger<IOrderService> _logger;
 
-        public OrderService (IOrderDBRepository orderRepository, IMongoDBCache mongoDBCache, ILogger<IOrderService> logger)
+        public OrderService (IOrderDBRepository orderRepository, IMongoDBCache mongoDBCache, ILogger<IOrderService> logger, ICustomerDBRepository customerRepository, IEmployeeDBRepository employeeRepository, IProductDBRepository productRepository)
         {
             _orderRepository = orderRepository;
             _mongoDBCache = mongoDBCache;
             _logger = logger;
+            _customerRepository = customerRepository;
+            _employeeRepository = employeeRepository;
+            _productRepository = productRepository;
         }
 
         public async Task<bool> AddOrder(int userId, int productId, int quantity)
@@ -40,7 +46,15 @@ namespace Store_Management.CORE.Services
 
                 if (result)
                 {
-                    _logger.LogInformation("Order successfully added with UserId: {UserId}, ProductId: {ProductId}, Quantity: {Quantity}", userId, productId, quantity);
+                    try
+                    {
+                        await _mongoDBCache.AddOrder(order);
+                        _logger.LogInformation("Order successfully added with UserId: {UserId}, ProductId: {ProductId}, Quantity: {Quantity}", userId, productId, quantity);
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError(ex, "An error occurred while adding the order to the MongoDB cache with UserId: {UserId}, ProductId: {ProductId}, Quantity: {Quantity}", userId, productId, quantity);
+                    }
                 }
                 else
                 {
@@ -87,7 +101,15 @@ namespace Store_Management.CORE.Services
 
                 if(result)
                 {
-                    _logger.LogInformation("Order with id: {Id} successfully modified.", id);
+                    try
+                    {
+                        await _mongoDBCache.ModifyOrder(id, order);
+                        _logger.LogInformation("Order with id: {Id} successfully modified.", id);
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError(ex, "An error has occurred while updating the cache for order with id: {OrderId}.", order.Id);
+                    }
                 }
                 else
                 {
@@ -111,7 +133,15 @@ namespace Store_Management.CORE.Services
 
                 if (result)
                 {
-                    _logger.LogInformation("Order with id: {Id} successfully deleted.", id);
+                    try
+                    {
+                        await _mongoDBCache.DeleteOrder(id);
+                        _logger.LogInformation("Order with id: {Id} successfully deleted.", id);
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError(ex, "An error has occurred while deleting the cache with id: {Id}.", id);
+                    }
                 }
                 else
                 {
@@ -124,6 +154,18 @@ namespace Store_Management.CORE.Services
                 _logger.LogError(ex, "An error has occurred while trying to delete an order with id: {Id}.", id);
                 return false;
             }
+        }
+
+        public async Task<bool> UserExists(int userId)
+        {
+            var customerExists = await _customerRepository.GetCustomerById(userId) != null;
+            var employeeExists = await _employeeRepository.GetEmployeeById(userId) != null;
+            return customerExists || employeeExists;
+        }
+
+        public async Task<bool> ProductExists(int productId)
+        {
+            return await _productRepository.GetProductById(productId) != null;
         }
     }
 }

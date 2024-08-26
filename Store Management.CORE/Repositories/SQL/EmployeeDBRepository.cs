@@ -83,5 +83,28 @@ namespace Store_Management.CORE.Repositories.SQL
                 return true;
             }
         }
+
+        public async Task<Employee> GetEmployeeById(int id)
+        {
+            try
+            {
+                using (var context = new DBContext())
+                {
+                    var employee = await context.Employees.FindAsync(id);
+                    
+                    if(employee == null)
+                    {
+                        Console.WriteLine($"Warning: Employee with id: {id} not found.");
+                    }
+
+                    return employee;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error occurred while retrieving employee with id: {id}", ex);
+                throw;
+            }
+        }
     }
 }

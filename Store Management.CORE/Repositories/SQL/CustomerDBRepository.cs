@@ -82,5 +82,28 @@ namespace Store_Management.CORE.Repositories.SQL
                 return true;
             }
         }
+
+        public async Task<Customer> GetCustomerById(int id)
+        {
+            try
+            {
+                using (var context = new DBContext())
+                {
+                    var customer = await context.Customers.FindAsync(id);
+
+                    if (customer == null)
+                    {
+                        Console.WriteLine($"Warning: Customer with id: {id} not found.");
+                    }
+
+                    return customer;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error occurred while retrieving customer with id: {id}", ex);
+                throw;
+            }
+        }
     }
 }

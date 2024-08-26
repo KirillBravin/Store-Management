@@ -8,5 +8,6 @@ namespace Store_Management.CORE.Contracts
         Task<List<Customer>> GetAllCustomers();
         Task<bool> ModifyCustomer(int id, Customer customer);
         Task<bool> DeleteCustomer(int id);
+        Task<Customer> GetCustomerById(int id);
     }
 }

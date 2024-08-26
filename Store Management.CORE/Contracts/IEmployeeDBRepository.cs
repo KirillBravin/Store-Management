@@ -8,5 +8,6 @@ namespace Store_Management.CORE.Contracts
         Task<List<Employee>> GetAllEmployees();
         Task<bool> ModifyEmployee(int id, Employee employee);
         Task<bool> DeleteEmployee(int id);
+        Task<Employee> GetEmployeeById(int id);
     }
 }

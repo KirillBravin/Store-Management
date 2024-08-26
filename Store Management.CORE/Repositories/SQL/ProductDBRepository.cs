@@ -79,5 +79,28 @@ namespace Store_Management.CORE.Repositories.SQL
                 return true;
             }
         }
+
+        public async Task<Product> GetProductById(int id)
+        {
+            try
+            {
+                using (var context = new DBContext())
+                {
+                    var product = await context.Products.FindAsync(id);
+
+                    if (product == null)
+                    {
+                        Console.WriteLine($"Warning: Product with id: {id} not found.");
+                    }
+
+                    return product;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error occurred while retrieving product with id: {id}", ex);
+                throw;
+            }
+        }
     }
 }
