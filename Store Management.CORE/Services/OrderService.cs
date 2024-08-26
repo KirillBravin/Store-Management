@@ -32,6 +32,18 @@ namespace Store_Management.CORE.Services
 
         public async Task<bool> AddOrder(int userId, int productId, int quantity)
         {
+            if (!await UserExists(userId))
+            {
+                _logger.LogWarning("User with id: {UserId} does not exist", userId);
+                return false;
+            }
+
+            if (!await ProductExists(productId))
+            {
+                _logger.LogWarning("Product with id: {ProductId} does not exist.", productId);
+                return false;
+            }
+
             try
             {
                 var order = new Order
