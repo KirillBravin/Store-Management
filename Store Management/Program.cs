@@ -1,3 +1,4 @@
+using MongoDB.Driver;
 using Serilog;
 using Serilog.Events;
 using Store_Management.CORE.Contracts;
@@ -25,7 +26,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ICustomerDBRepository, CustomerDBRepository>();
 builder.Services.AddScoped<IEmployeeDBRepository, EmployeeDBRepository>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IOrderDBRepository, OrderDBRepository>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IProductDBRepository, ProductDBRepository>();
 builder.Services.AddScoped<IMongoDBCache, MongoDBCache>();
+builder.Services.AddSingleton<IMongoClient, MongoClient>(_ => new MongoClient("mongodb+srv://Puzzles:0JhnqCzn1toKhSTZ@cluster0.ubg9w.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"));
 
 var app = builder.Build();
 
