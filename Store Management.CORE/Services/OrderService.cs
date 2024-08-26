@@ -108,6 +108,20 @@ namespace Store_Management.CORE.Services
         {
             try
             {
+                bool userExists = await UserExists(order.UserId);
+                if (!userExists)
+                {
+                    _logger.LogWarning("Modification failed. User with id: {UserId} does not exist.", order.UserId);
+                    return false;
+                }
+
+                var product = await _productRepository.GetProductById(order.ProductId);
+                if (product == null)
+                {
+                    _logger.LogWarning("Modification failed. Product with id: {ProductId} does not exist.", order.ProductId);
+                    return false;
+                }
+
                 bool result = false;
                 result = await _orderRepository.ModifyOrder(id, order);
 
