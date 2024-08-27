@@ -30,9 +30,9 @@ Ensure you have the following installed on your machine:
   dotnet ef database update
   ```
 
-  Technologies Used
+ ## Technologies Used
 
-## This app is built using a range of modern technologies and best practices:
+### This app is built using a range of modern technologies and best practices:
 
   * **C#**: The primary programming language used for the application.
   
