@@ -1,15 +1,71 @@
-Welcome to the store management app.
+# Store Management App
 
-Using this app you can create, modify, delete and check all products, users and orders in your store.
+Welcome to the Store Management App – a powerful solution designed to help you efficiently manage your store’s products, users, and orders. This application provides a full suite of features for creating, modifying, deleting, and viewing all the essential data needed to run your store smoothly.
 
-To initiate the app, input these commands in API terminal:
+## Features
 
-"dotnet ef migrations add InitialCreate"
+ * Product Management: Create, update, delete, and view products in your store.
+  
+ * User Management: Handle user data, including creating, modifying, and removing users.
+  
+ * Order Management: Manage orders, including creation, modification, and deletion.
 
-"dotnet ef database update"
 
-Additional information:
-This app was mostly written using: C#, Entity Framework, ASP.NET API, MongoDB Driver, Moq and Serilog.
-I used OOP principles. Data was mostly handles by both SQL and NoSQL. This app also logs data using Serilog.
-If you're interested in visual, there are screenshots of my graphs that I made. Sadly I lost the initial graph due to accident, but the pictures should still provide the general idea.
-I also use separation of logic, by using repositories for my databases data, services for business logic and controllers for my RESTful APIes.
+## Getting Started
+### Prerequisites
+
+Ensure you have the following installed on your machine:
+
+ * .NET SDK
+ * Entity Framework Core
+ * A database setup (SQL Server or MongoDB)
+
+## Installation
+
+  **Run Database Migrations**
+     
+  Open your API terminal and execute the following commands to set up the database:
+  ```
+  dotnet ef migrations add InitialCreate
+  dotnet ef database update
+  ```
+
+  Technologies Used
+
+## This app is built using a range of modern technologies and best practices:
+
+  * **C#**: The primary programming language used for the application.
+  
+  * **Entity Framework Core**: For interacting with the SQL database.
+  
+  * **ASP.NET Core**: To create RESTful APIs.
+  
+  * **MongoDB Driver**: To interact with MongoDB for NoSQL data handling.
+  
+  * **Moq**: For mocking dependencies in unit tests.
+  
+  * **Serilog**: For structured logging and monitoring.
+
+## Architectural Principles
+
+  **Object-Oriented Programming (OOP)**: The application follows OOP principles to promote reusability, scalability, and maintainability.
+  ### Separation of Concerns:
+  
+  * **Repositories**: Handle data access logic, segregating it from business logic.
+      
+  * **Services**: Manage the core business logic of the application.
+      
+  * **Controllers**: Serve as the bridge between the client requests and the server, exposing RESTful APIs.
+
+
+## Data Handling
+
+This application supports both SQL and NoSQL databases, ensuring flexibility in data storage. Entity Framework is used for SQL operations, while the MongoDB driver is utilized for NoSQL data.
+
+## Logging
+
+All key operations and errors are logged using Serilog, providing detailed insights into the application’s behavior and performance.
+
+## Visuals
+
+While the original graph showcasing data insights was lost, you can find screenshots of similar graphs in the repository. These images give a general idea of how data visualization is handled within the app.
